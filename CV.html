@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ivan Warburton - IT Systems Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066cc;
+            --secondary: #00c2a8;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --accent: #ff6b6b;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            33% { transform: translateY(-100px) translateX(50px); }
+            66% { transform: translateY(-50px) translateX(-50px); }
+        }
+
+        /* Header */
+        .header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            z-index: 999;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            display: block;
+            padding: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease;
+            padding: 0 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            color: white;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .title {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+        }
+
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid var(--secondary);
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+            display: inline-block;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--secondary); }
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-item {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+                gap: 0.4rem;
+            }
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .cta-buttons {
+                gap: 0.75rem;
+            }
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--secondary);
+        }
+
+        .skill-category h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            background: var(--gradient);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            border-color: transparent;
+        }
+
+        /* Experience Timeline */
+        #experience .timeline {
+            position: relative;
+            padding: 2rem 0;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        #experience .timeline::before {
+            display: none; /* Remove the line since there's only one item */
+        }
+
+        #experience .timeline-item {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        #experience .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        #experience .timeline-content:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        #experience .timeline-content h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        #experience .timeline-content .date {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        #experience .timeline-content ul {
+            color: rgba(255, 255, 255, 0.8);
+            margin-left: 1.5rem;
+        }
+
+        #experience .timeline-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        #experience .timeline-dot {
+            display: none; /* Remove dot since no timeline line */
+        }
+
+        /* Education */
+        .education-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .education-card h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .education-card .degree {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .education-card ul {
+            color: rgba(255, 255, 255, 0.8);
+            margin-left: 1.5rem;
+        }
+
+        /* Interests */
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .interest-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .interest-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            border-color: var(--secondary);
+        }
+
+        .interest-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .interest-card h4 {
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(26, 26, 46, 0.95);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--gradient);
+            transform: translateY(-5px);
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .title {
+                font-size: 1.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            #experience .timeline::before {
+                display: none;
+            }
+
+            #experience .timeline-content {
+                margin: 0;
+            }
+
+            #experience .timeline-dot {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">IW</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="about">
+        <div class="hero-content">
+            <h1>Ivan Warburton</h1>
+            <div class="title typewriter">IT Systems Engineer & Team Leader</div>
+            <p>Results-driven professional with 5+ years managing enterprise-scale environments. First-Class BSc Software Engineering graduate passionate about infrastructure, automation, and emerging technologies.</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📍</span>
+                    <span>Salford / Milton Keynes</span>
+                </div>
+                <div class="contact-item">
+                    <span>📧</span>
+                    <span>IvanMJWarburton@hotmail.co.uk</span>
+                </div>
+                <div class="contact-item">
+                    <span>📱</span>
+                    <span>07494 061 553</span>
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="https://www.linkedin.com/in/ivan-warburton-53a998220" class="btn btn-primary" target="_blank">LinkedIn Profile</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="fade-in">
+        <h2 class="section-title">Core Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>🖥️ Endpoint & Device Management</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">SCCM</span>
+                    <span class="skill-tag">Jamf Pro</span>
+                    <span class="skill-tag">Intune (MDM)</span>
+                    <span class="skill-tag">Windows Imaging</span>
+                    <span class="skill-tag">Patch Management</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>☁️ Infrastructure & Cloud</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Active Directory</span>
+                    <span class="skill-tag">Microsoft 365</span>
+                    <span class="skill-tag">Azure</span>
+                    <span class="skill-tag">Intune</span>
+                    <span class="skill-tag">Server Support</span>
+                    <span class="skill-tag">PaperCut</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>💻 Programming & Automation</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">PowerShell</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">C#</span>
+                    <span class="skill-tag">C++</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">React Native</span>
+                    <span class="skill-tag">Node.js</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>💼 Systems & Platforms</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Windows 7-11</span>
+                    <span class="skill-tag">macOS</span>
+                    <span class="skill-tag">Outlook</span>
+                    <span class="skill-tag">Teams</span>
+                    <span class="skill-tag">SharePoint</span>
+                    <span class="skill-tag">Visual Studio</span>
+                    <span class="skill-tag">Git</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>👥 Leadership & Operations</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Team Supervision</span>
+                    <span class="skill-tag">Vendor Management</span>
+                    <span class="skill-tag">Process Improvement</span>
+                    <span class="skill-tag">Asset Lifecycle</span>
+                    <span class="skill-tag">Documentation</span>
+                    <span class="skill-tag">Mentoring</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>🎯 Soft Skills</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Problem Solving</span>
+                    <span class="skill-tag">Customer Service</span>
+                    <span class="skill-tag">Communication</span>
+                    <span class="skill-tag">Adaptability</span>
+                    <span class="skill-tag">Technical Training</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="fade-in">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Senior IT Advisor</h3>
+                    <div class="date">Manchester Metropolitan University | Oct 2019 – Present</div>
+                    <ul>
+                        <li>Manage and support over 10,000 Windows and macOS devices using SCCM and Jamf Pro</li>
+                        <li>Lead a team of Student Interns, allocating workloads and mentoring for service excellence</li>
+                        <li>Provide 2nd/3rd line support for Microsoft 365 (Outlook, Teams, SharePoint)</li>
+                        <li>Liaise with Microsoft, Canon, Adobe and vendors for troubleshooting and coordination</li>
+                        <li>Maintain Active Directory, manage user access, and oversee equipment lifecycle</li>
+                        <li>Integrate new technologies and administer PaperCut print management</li>
+                        <li>Recognized for strong documentation and ability to deliver under pressure</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="fade-in">
+        <h2 class="section-title">Education</h2>
+        <div class="education-card">
+            <h3>Manchester Metropolitan University</h3>
+            <div class="degree">BSc (Hons) Software Engineering – First Class Honours</div>
+            <div class="date" style="color: rgba(255, 255, 255, 0.6); margin-bottom: 1rem;">2018 – 2022</div>
+            <ul>
+                <li><strong>Final Year Project:</strong> Virtual Tour App of the University using React Native + Node.js with SQL backend</li>
+                <li>Developed full-stack skills: Java, Python, C++, C#, HTML/CSS/JS, PHP, SQL, AJAX, REST APIs</li>
+                <li>Strong foundation in software engineering principles and methodologies</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Interests Section -->
+    <section class="fade-in">
+        <h2 class="section-title">Interests</h2>
+        <div class="interests-grid">
+            <div class="interest-card">
+                <div class="interest-icon">🚀</div>
+                <h4>Emerging Technologies</h4>
+            </div>
+            <div class="interest-card">
+                <div class="interest-icon">⚡</div>
+                <h4>Electric Vehicles</h4>
+            </div>
+            <div class="interest-card">
+                <div class="interest-icon">📈</div>
+                <h4>Stock & Crypto Markets</h4>
+            </div>
+            <div class="interest-card">
+                <div class="interest-icon">🤖</div>
+                <h4>Automation & AI</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="fade-in">
+        <h2 class="section-title">Let's Connect</h2>
+        <div style="text-align: center; color: rgba(255, 255, 255, 0.8); max-width: 600px; margin: 0 auto;">
+            <p style="margin-bottom: 2rem; font-size: 1.1rem;">
+                Open to exciting opportunities in IT Management and Infrastructure roles. 
+                Let's discuss how I can drive efficiency and strategic improvements for your organization.
+            </p>
+            <div class="social-links">
+                <a href="/cdn-cgi/l/email-protection#2d645b4c4360677a4c5f4f585f5942436d454259404c4441034e42035846" class="social-link" title="Email">📧</a>
+                <a href="https://www.linkedin.com/in/ivan-warburton-53a998220" class="social-link" target="_blank" title="LinkedIn">in</a>
+                <a href="tel:07494061553" class="social-link" title="Phone">📱</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Ivan Warburton. All rights reserved.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">Built with passion for innovation and excellence</p>
+    </footer>
+
+    <script>
+        // Particle Animation
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 5 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Scroll Animation
+        function handleScroll() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const rect = element.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight - 100;
+                if (isVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                // Close mobile menu after clicking
+                const mobileMenu = document.getElementById('mobileMenu');
+                if (mobileMenu) {
+                    mobileMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                mobileMenuBtn.textContent = mobileMenu.classList.contains('active') ? '✕' : '☰';
+            });
+            
+            // Close menu when clicking on a link
+            document.querySelectorAll('.mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    mobileMenuBtn.textContent = '☰';
+                });
+            });
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            createParticles();
+            handleScroll();
+        });
+
+        window.addEventListener('scroll', handleScroll);
+    </script>
+</body>
+</html>
